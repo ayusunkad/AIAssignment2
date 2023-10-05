@@ -1,0 +1,30 @@
+def breadth_first(start_city, goal_city, road_map):
+    """Performs a breadth-first search on the Romanian road map data.
+
+    Args:
+        start_city (str): The start city.
+        goal_city (str): The goal city.
+        road_map (dict): A dictionary mapping cities to their neighbors and distances.
+
+    Returns:
+        (list, int): A list of cities in the path from the start city to the goal city, and the total distance of the path.
+    """
+
+    queue = [start_city]
+    visited = set()
+    path = []
+
+    while queue:
+        current_city = queue.pop(0)
+        visited.add(current_city)
+
+        if current_city == goal_city:
+            path.append(current_city)
+            return path, sum(road_map[current_city][city] for city in path)
+
+        for neighbor in road_map[current_city]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+                path.append(current_city)
+
+    return [], 0
